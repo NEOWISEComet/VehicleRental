@@ -96,7 +96,7 @@ public class ManageRental {
     }
 
     /**
-     * Method or function for returning a vehivle
+     * Method or function for returning a vehicle
      * @param borrowID
      */
     public void returnVehicle(String borrowID) {
@@ -104,10 +104,29 @@ public class ManageRental {
         String vehicleID = borrow.getVehicleID();
         if (vehicleID != null && borrow != null) {
             VehicleRentals vehicle = records.getRentalVehicles().get(vehicleID);
-            vehicle.setAvailability(VehicleRentals.Availability.Available);
             vehicle.calculateRentalPrice(borrow.getRentedDays());
-            //This is just assuming if the vehicle is Paid after returning it
-            //borrow.setStatus(BorrowClass.BorrowStatus.Paid);
+        }
+    }
+
+    /**
+     * Func to change the status of a vehicle from Unavailable to Available
+     * @param vehicleID
+     */
+    public void changeVehicleStatus(String vehicleID) {
+        VehicleRentals vehicle = records.getRentalVehicles().get(vehicleID);
+        if (vehicle != null) {
+            vehicle.setAvailability(VehicleRentals.Availability.Available);
+        }
+    }
+
+    /**
+     * Function if a vehicle has been paid
+     * @param borrowID
+     */
+    public void setVehiclePaid(String borrowID) {
+        BorrowClass borrow = records.getBorrowRecords().get(borrowID);
+        if (borrow != null) {
+            borrow.setStatus(BorrowClass.BorrowStatus.Paid);
         }
     }
 
